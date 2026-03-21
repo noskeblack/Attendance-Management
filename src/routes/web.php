@@ -9,7 +9,6 @@ use App\Http\Controllers\AttendanceDetailController;
 use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\StampCorrectionRequestController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -33,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AdminLoginController::class, 'create'])->name('admin.login');
-    Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])->name('admin.login.store');
+    Route::post('/admin/login', [AdminLoginController::class, 'store'])->name('admin.login.store');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {

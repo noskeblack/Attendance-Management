@@ -47,7 +47,15 @@ class FortifyServiceProvider extends ServiceProvider
                 ]);
             }
 
-            if ($user->is_admin) {
+            $isAdminLogin = $request->is('admin/login');
+
+            if ($isAdminLogin && ! $user->is_admin) {
+                throw ValidationException::withMessages([
+                    'email' => ['ログイン情報が登録されていません'],
+                ]);
+            }
+
+            if (! $isAdminLogin && $user->is_admin) {
                 throw ValidationException::withMessages([
                     'email' => ['ログイン情報が登録されていません'],
                 ]);

@@ -22,7 +22,7 @@
 
 | 画面 | メソッド | パス | コントローラ |
 |------|----------|------|--------------|
-| 管理者ログイン | GET/POST | `/admin/login` | `Admin\AdminLoginController` |
+| 管理者ログイン | GET/POST | `/admin/login` | `Admin\AdminLoginController@create` / `Fortify AuthenticatedSessionController@store` |
 | 日次勤怠一覧 | GET | `/admin/attendance/list` | `Admin\AdminAttendanceController@daily` |
 | 勤怠詳細 | GET/PUT | `/admin/attendance/{attendance}` | `Admin\AdminAttendanceController@show` / `update` |
 | スタッフ一覧 | GET | `/admin/staff/list` | `Admin\AdminStaffController@index` |

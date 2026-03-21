@@ -2,14 +2,36 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class RegisterRequest
+class RegisterRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return true;
+    }
+
     /**
-     * @return array<string, array<int, mixed>>
+     * @return array<string, mixed>
      */
-    public static function rules(): array
+    public function rules(): array
+    {
+        return self::rulesForCreation();
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return self::messagesForCreation();
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public static function rulesForCreation(): array
     {
         return [
             'name' => ['required', 'string', 'max:255'],
@@ -27,7 +49,7 @@ class RegisterRequest
     /**
      * @return array<string, string>
      */
-    public static function messages(): array
+    public static function messagesForCreation(): array
     {
         return [
             'name.required' => 'お名前を入力してください',

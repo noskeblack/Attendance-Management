@@ -3,16 +3,16 @@
 @section('title', '日次勤怠一覧')
 
 @section('content')
-    <div class="card">
-        <h1>日次勤怠一覧</h1>
-        <p class="muted">{{ $date->locale('ja')->isoFormat('YYYY年M月D日(ddd)') }}</p>
-        <div style="display:flex; gap:12px; margin-bottom:16px;">
-            <a class="btn" href="{{ route('admin.attendance.daily', $prevQuery) }}">前日</a>
-            <a class="btn" href="{{ route('admin.attendance.daily', $nextQuery) }}">翌日</a>
+    <div class="ct-card">
+        <h1 class="ct-title">日次勤怠一覧</h1>
+        <p class="ct-muted">{{ $date->locale('ja')->isoFormat('YYYY年M月D日(ddd)') }}</p>
+        <div class="ct-actions" style="margin-bottom:16px;">
+            <a class="ct-btn" href="{{ route('admin.attendance.daily', $prevQuery) }}">前日</a>
+            <a class="ct-btn" href="{{ route('admin.attendance.daily', $nextQuery) }}">翌日</a>
         </div>
 
-        <div style="overflow:auto;">
-            <table>
+        <div class="ct-table-wrap">
+            <table class="ct-table">
                 <thead>
                     <tr>
                         <th>名前</th>

@@ -3,16 +3,17 @@
 @section('title', 'スタッフ別勤怠一覧')
 
 @section('content')
-    <div class="card">
-        <h1>スタッフ別勤怠一覧（{{ $user->name }}）</h1>
-        <p class="muted">{{ $current->isoFormat('YYYY年M月') }}</p>
-        <div style="display:flex; gap:12px; margin-bottom:16px;">
-            <a class="btn" href="{{ route('admin.staff.attendance', array_merge(['user' => $user->id], $prevQuery)) }}">前月</a>
-            <a class="btn" href="{{ route('admin.staff.attendance', array_merge(['user' => $user->id], $nextQuery)) }}">翌月</a>
+    <div class="ct-card">
+        <h1 class="ct-title">スタッフ別勤怠一覧（{{ $user->name }}）</h1>
+        <p class="ct-muted">{{ $current->isoFormat('YYYY年M月') }}</p>
+        <div class="ct-actions ct-actions--mb">
+            <a class="ct-btn" href="{{ route('admin.staff.attendance', array_merge(['user' => $user->id], $prevQuery)) }}">前月</a>
+            <a class="ct-btn" href="{{ route('admin.staff.attendance', array_merge(['user' => $user->id], $nextQuery)) }}">翌月</a>
+            <a class="ct-btn ct-btn--primary" href="{{ route('admin.staff.attendance.export', ['user' => $user->id, 'year' => $current->year, 'month' => $current->month]) }}">CSV出力</a>
         </div>
 
-        <div style="overflow:auto;">
-            <table>
+        <div class="ct-table-wrap">
+            <table class="ct-table">
                 <thead>
                     <tr>
                         <th>日付</th>
@@ -36,7 +37,7 @@
                             <td><a href="{{ route('admin.attendance.show', $attendance) }}">詳細</a></td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="muted">勤怠はありません。</td></tr>
+                        <tr><td colspan="5" class="ct-muted">勤怠はありません。</td></tr>
                     @endforelse
                 </tbody>
             </table>

@@ -6,7 +6,7 @@
     <div class="ct-card">
         <h1 class="ct-title">日次勤怠一覧</h1>
         <p class="ct-muted">{{ $date->locale('ja')->isoFormat('YYYY年M月D日(ddd)') }}</p>
-        <div class="ct-actions" style="margin-bottom:16px;">
+        <div class="ct-actions ct-actions--mb">
             <a class="ct-btn" href="{{ route('admin.attendance.daily', $prevQuery) }}">前日</a>
             <a class="ct-btn" href="{{ route('admin.attendance.daily', $nextQuery) }}">翌日</a>
         </div>

@@ -46,6 +46,32 @@ class RegisterValidationTest extends TestCase
         $response->assertSessionHasErrors('password');
         $this->assertSame('パスワードと一致しません', session('errors')->first('password'));
     }
+
+    public function test_register_requires_password_when_missing(): void
+    {
+        $response = $this->post('/register', [
+            'name' => 'テスト',
+            'email' => 'missing-pw@example.com',
+            'password_confirmation' => 'password123',
+        ]);
+
+        $response->assertSessionHasErrors('password');
+        $this->assertSame('パスワードを入力してください', session('errors')->first('password'));
+    }
+
+    public function test_register_requires_password_when_empty(): void
+    {
+        $response = $this->post('/register', [
+            'name' => 'テスト',
+            'email' => 'empty-pw@example.com',
+            'password' => '',
+            'password_confirmation' => 'password123',
+        ]);
+
+        $response->assertSessionHasErrors('password');
+        $this->assertSame('パスワードを入力してください', session('errors')->first('password'));
+    }
+
     public function test_register_requires_password_min_8(): void
     {
         $response = $this->post('/register', [
@@ -56,5 +82,21 @@ class RegisterValidationTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('password');
+        $this->assertSame('パスワードは8文字以上で入力してください', session('errors')->first('password'));
+    }
+
+    public function test_register_persists_user_to_database(): void
+    {
+        $this->post('/register', [
+            'name' => '保存テスト',
+            'email' => 'saved@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ])->assertRedirect();
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'saved@example.com',
+            'name' => '保存テスト',
+        ]);
     }
 }

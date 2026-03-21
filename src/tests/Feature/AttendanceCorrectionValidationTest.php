@@ -43,6 +43,24 @@ class AttendanceCorrectionValidationTest extends TestCase
         $this->assertSame('出勤時間もしくは退勤時間が不適切な値です', session('errors')->first('clock_in'));
     }
 
+    public function test_it_shows_invalid_break_start_before_clock_in_message(): void
+    {
+        [$user, $attendance] = $this->seedAttendance();
+
+        $response = $this->actingAs($user)
+            ->post(route('attendance.detail.submit', $attendance), [
+                'clock_in' => '09:00',
+                'clock_out' => '18:00',
+                'remark' => '確認',
+                'breaks' => [
+                    ['start' => '08:00', 'end' => '08:30'],
+                ],
+            ]);
+
+        $response->assertSessionHasErrors('breaks.0.start');
+        $this->assertSame('休憩時間が不適切な値です', session('errors')->first('breaks.0.start'));
+    }
+
     public function test_it_shows_invalid_break_start_message(): void
     {
         [$user, $attendance] = $this->seedAttendance();
@@ -53,7 +71,7 @@ class AttendanceCorrectionValidationTest extends TestCase
                 'clock_out' => '18:00',
                 'remark' => '確認',
                 'breaks' => [
-                    ['start' => '08:00', 'end' => '09:30'],
+                    ['start' => '19:00', 'end' => '19:30'],
                 ],
             ]);
 

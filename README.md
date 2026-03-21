@@ -46,6 +46,23 @@ MAIL_FROM_NAME="${APP_NAME}"
 docker compose exec php bash -lc "cd /var/www && composer install && php artisan key:generate && php artisan migrate --force && php artisan db:seed --force"
 ```
 
+フロントエンドアセット（Vite）をビルド:
+
+```bash
+cd src
+npm install
+npm run build
+```
+
+`Illuminate\\Foundation\\ViteManifestNotFoundException` が出る場合は、
+`src/public/build/manifest.json` が未生成です。上記コマンドを実行してください。
+
+ホストに `npm` がない場合は、Node コンテナ経由でも実行できます:
+
+```bash
+docker run --rm -v "$PWD/src:/app" -w /app node:20 bash -lc "npm install && npm run build"
+```
+
 ブラウザ: `http://localhost`（nginx）
 
 - MailHog（開発用メール受信）: `http://localhost:8025`
@@ -60,6 +77,8 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
+npm install
+npm run build
 php artisan serve
 ```
 
@@ -69,6 +88,9 @@ php artisan serve
 cd src
 php artisan test
 ```
+
+- **用語の整理**（例: 「勤務中」と「出勤中」）: [docs/glossary.md](docs/glossary.md)
+- **要件シート「テストケース一覧」↔ PHPUnit の対応表**: [docs/test-traceability.md](docs/test-traceability.md)
 
 ## 主な画面パス
 
@@ -83,9 +105,13 @@ php artisan test
 | `/admin/login` | 管理者ログイン |
 | `/admin/attendance/list` | 日次勤怠一覧 |
 | `/admin/staff/list` | スタッフ一覧 |
+| `/admin/attendance/staff/{id}/export/csv` | スタッフ別月次勤怠 CSV（`year` / `month` クエリ） |
 | `/stamp_correction_request/approve/{id}` | 修正申請承認（管理者） |
 
 ## ドキュメント
 
 - [基本設計（ルート一覧）](docs/basic-design.md)
 - [テーブル仕様・ER](docs/table-spec.md)
+- [用語・表記（glossary）](docs/glossary.md)
+- [テストトレーサビリティ](docs/test-traceability.md)
+- [Figma・素材（DG01）と実装の関係](docs/figma-alignment.md)

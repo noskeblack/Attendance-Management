@@ -6,7 +6,7 @@
     <div class="ct-card">
         <h1 class="ct-title">勤怠一覧</h1>
         <p class="ct-muted">{{ $current->isoFormat('YYYY年M月') }}</p>
-        <div class="ct-actions" style="margin-bottom:16px;">
+        <div class="ct-actions ct-actions--mb">
             <a class="ct-btn" href="{{ route('attendance.list', $prevQuery) }}">前月</a>
             <a class="ct-btn" href="{{ route('attendance.list', $nextQuery) }}">翌月</a>
         </div>

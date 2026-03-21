@@ -30,16 +30,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('stamp_correction_request.index');
 });
 
-Route::middleware('guest')->group(function () {
-    Route::get('/admin/login', [AdminLoginController::class, 'create'])->name('admin.login');
-    Route::post('/admin/login', [AdminLoginController::class, 'store'])->name('admin.login.store');
-});
+Route::get('/admin/login', [AdminLoginController::class, 'create'])->name('admin.login');
+Route::post('/admin/login', [AdminLoginController::class, 'store'])->name('admin.login.store');
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'daily'])->name('admin.attendance.daily');
     Route::get('/admin/attendance/{attendance}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
     Route::put('/admin/attendance/{attendance}', [AdminAttendanceController::class, 'update'])->name('admin.attendance.update');
     Route::get('/admin/staff/list', [AdminStaffController::class, 'index'])->name('admin.staff.index');
+    Route::get('/admin/attendance/staff/{user}/export/csv', [AdminStaffController::class, 'exportMonthlyCsv'])->name('admin.staff.attendance.export');
     Route::get('/admin/attendance/staff/{user}', [AdminStaffController::class, 'monthlyAttendance'])->name('admin.staff.attendance');
 
     Route::get('/stamp_correction_request/approve/{stamp_correction_request}', [StampCorrectionApproveController::class, 'show'])->name('stamp_correction_request.approve');

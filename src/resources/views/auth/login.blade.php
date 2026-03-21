@@ -22,7 +22,7 @@
             </div>
             <button type="submit" class="ct-btn ct-btn--primary">ログイン</button>
         </form>
-        <p class="ct-muted" style="margin-top:16px;">
+        <p class="ct-muted ct-block-mt">
             <a href="{{ route('register') }}">会員登録はこちら</a>
         </p>
     </div>

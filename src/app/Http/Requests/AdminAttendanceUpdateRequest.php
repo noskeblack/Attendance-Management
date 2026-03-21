@@ -6,14 +6,13 @@ use App\Models\Attendance;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AttendanceCorrectionRequest extends FormRequest
+class AdminAttendanceUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
         $attendance = $this->route('attendance');
 
-        return $attendance instanceof Attendance
-            && $this->user()?->id === $attendance->user_id;
+        return $attendance instanceof Attendance;
     }
 
     /**
@@ -23,7 +22,7 @@ class AttendanceCorrectionRequest extends FormRequest
     {
         return [
             'clock_in' => ['required', 'date_format:H:i'],
-            'clock_out' => ['required', 'date_format:H:i'],
+            'clock_out' => ['nullable', 'date_format:H:i'],
             'breaks' => ['nullable', 'array'],
             'breaks.*.start' => ['nullable', 'date_format:H:i'],
             'breaks.*.end' => ['nullable', 'date_format:H:i'],
@@ -54,9 +53,22 @@ class AttendanceCorrectionRequest extends FormRequest
 
             try {
                 $in = $base->copy()->setTimeFromTimeString($this->input('clock_in'));
-                $out = $base->copy()->setTimeFromTimeString($this->input('clock_out'));
             } catch (\Throwable) {
                 $validator->errors()->add('clock_in', '出勤時間もしくは退勤時間が不適切な値です');
+
+                return;
+            }
+
+            $clockOut = $this->input('clock_out');
+            if (! $clockOut) {
+                // 退勤未入力の場合は休憩の整合性チェック（退勤より後）を行えないため、ここで打ち切る
+                return;
+            }
+
+            try {
+                $out = $base->copy()->setTimeFromTimeString($clockOut);
+            } catch (\Throwable) {
+                $validator->errors()->add('clock_out', '出勤時間もしくは退勤時間が不適切な値です');
 
                 return;
             }
@@ -72,6 +84,7 @@ class AttendanceCorrectionRequest extends FormRequest
                 if (! $start || ! $end) {
                     continue;
                 }
+
                 try {
                     $bs = $base->copy()->setTimeFromTimeString($start);
                     $be = $base->copy()->setTimeFromTimeString($end);
@@ -81,7 +94,6 @@ class AttendanceCorrectionRequest extends FormRequest
                     continue;
                 }
 
-                // FN029: 休憩開始が出勤より前、または退勤より後
                 if ($bs->lt($in) || $bs->gt($out)) {
                     $validator->errors()->add("breaks.$index.start", '休憩時間が不適切な値です');
                 }

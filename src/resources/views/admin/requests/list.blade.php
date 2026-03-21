@@ -34,7 +34,7 @@
             </table>
         </div>
 
-        <h2 class="ct-subtitle" style="margin-top:24px;">承認済み</h2>
+        <h2 class="ct-subtitle ct-subtitle--spaced">承認済み</h2>
         <div class="ct-table-wrap">
             <table class="ct-table">
                 <thead>

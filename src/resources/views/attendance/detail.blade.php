@@ -17,7 +17,7 @@
             @csrf
             <div class="ct-field">
                 <label class="ct-label">出勤・退勤</label>
-                <div class="ct-actions" style="align-items:center;">
+                <div class="ct-row">
                     <input class="ct-input" type="time" name="clock_in" value="{{ old('clock_in', optional($attendance->clock_in_at)->format('H:i')) }}" @disabled($readOnly)>
                     <span>〜</span>
                     <input class="ct-input" type="time" name="clock_out" value="{{ old('clock_out', optional($attendance->clock_out_at)->format('H:i')) }}" @disabled($readOnly)>
@@ -35,13 +35,13 @@
                     }
                 @endphp
                 @foreach ($rows as $i => $row)
-                    <div class="ct-actions" style="align-items:center; margin-bottom:8px;">
+                    <div class="ct-row ct-row--mb">
                         <input class="ct-input" type="time" name="breaks[{{ $i }}][start]" value="{{ $row['start'] ?? '' }}" @disabled($readOnly)>
                         <span>〜</span>
                         <input class="ct-input" type="time" name="breaks[{{ $i }}][end]" value="{{ $row['end'] ?? '' }}" @disabled($readOnly)>
                     </div>
                 @endforeach
-                <div class="ct-actions" style="align-items:center; margin-bottom:8px;">
+                <div class="ct-row ct-row--mb">
                     <input class="ct-input" type="time" name="breaks[{{ count($rows) }}][start]" value="" @disabled($readOnly)>
                     <span>〜</span>
                     <input class="ct-input" type="time" name="breaks[{{ count($rows) }}][end]" value="" @disabled($readOnly)>

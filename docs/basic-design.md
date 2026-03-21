@@ -27,6 +27,7 @@
 | 勤怠詳細 | GET/PUT | `/admin/attendance/{attendance}` | `Admin\AdminAttendanceController@show` / `update` |
 | スタッフ一覧 | GET | `/admin/staff/list` | `Admin\AdminStaffController@index` |
 | スタッフ別勤怠一覧 | GET | `/admin/attendance/staff/{user}` | `Admin\AdminStaffController@monthlyAttendance` |
+| スタッフ別月次 CSV | GET | `/admin/attendance/staff/{user}/export/csv` | `Admin\AdminStaffController@exportMonthlyCsv` |
 | 修正申請承認 | GET/POST | `/stamp_correction_request/approve/{stamp_correction_request}` | `Admin\StampCorrectionApproveController` |
 
 ## ミドルウェア

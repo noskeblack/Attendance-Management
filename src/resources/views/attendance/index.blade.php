@@ -16,7 +16,7 @@
             <p class="ct-success">{{ session('clock_out_message') }}</p>
         @endif
 
-        <div class="ct-actions" style="margin-top:16px;">
+        <div class="ct-actions ct-actions--mt">
             @if ($status === AttendanceStatus::OffDuty)
                 <form method="POST" action="{{ route('attendance.clock_in') }}">
                     @csrf

@@ -1,0 +1,29 @@
+@extends('layouts.guest')
+
+@section('title', 'ログイン')
+
+@section('content')
+    <div class="card">
+        <h1>ログイン（一般）</h1>
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="field">
+                <label for="email">メールアドレス</label>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
+                @error('email')<div class="error">{{ $message }}</div>@enderror
+            </div>
+            <div class="field">
+                <label for="password">パスワード</label>
+                <input id="password" type="password" name="password" required autocomplete="current-password">
+                @error('password')<div class="error">{{ $message }}</div>@enderror
+            </div>
+            <div class="field">
+                <label><input type="checkbox" name="remember"> ログイン状態を保持する</label>
+            </div>
+            <button type="submit" class="btn btn-primary">ログイン</button>
+        </form>
+        <p class="muted" style="margin-top:16px;">
+            <a href="{{ route('register') }}">会員登録はこちら</a>
+        </p>
+    </div>
+@endsection

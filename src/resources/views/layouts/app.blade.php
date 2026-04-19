@@ -12,7 +12,7 @@
 <body>
     <header class="ct-header">
         <div class="ct-header-inner">
-            <div class="brand">COACHTECH 勤怠管理</div>
+            <a href="{{ route('attendance.index') }}" class="brand">COACHTECH 勤怠管理</a>
             <nav class="ct-nav">
                 @auth
                     <a href="{{ route('attendance.index') }}">勤怠打刻</a>

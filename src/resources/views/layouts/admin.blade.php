@@ -11,7 +11,7 @@
 <body>
     <header class="ct-header">
         <div class="ct-header-inner">
-            <div class="brand">管理者：勤怠管理</div>
+            <a href="{{ route('admin.attendance.daily') }}" class="brand">管理者：勤怠管理</a>
             <nav class="ct-nav">
                 <a href="{{ route('admin.attendance.daily') }}">日次勤怠</a>
                 <a href="{{ route('admin.staff.index') }}">スタッフ一覧</a>

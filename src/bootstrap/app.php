@@ -11,6 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // guest ミドルウェアのデフォルトは home/dashboard ルートが無いと「/」へ送るため、
+        // 「/」→ login →「/」… のリダイレクトループになる。Fortify の home と揃える。
+        $middleware->redirectUsersTo('/attendance');
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
             'not_admin' => \App\Http\Middleware\EnsureUserIsNotAdmin::class,

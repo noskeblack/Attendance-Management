@@ -51,6 +51,11 @@ body {
     gap: 16px;
 }
 
+a.brand {
+    color: inherit;
+    text-decoration: none;
+}
+
 .ct-nav {
     display: flex;
     align-items: center;

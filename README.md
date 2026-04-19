@@ -9,6 +9,8 @@ Laravel 12 + Laravel Fortify を用いた勤怠管理アプリケーションで
 | 一般ユーザー | `user@example.com` | `password` |
 | 管理者 | `admin@example.com` | `password` |
 
+一般ユーザーは `/login`、管理者は `/admin/login` からログインしてください。
+
 ## Docker での起動
 
 リポジトリルートで:
@@ -105,4 +107,5 @@ php artisan test
 
 - [基本設計（ルート一覧）](docs/basic-design.md)
 - [テーブル仕様・ER](docs/table-spec.md)
+
 - [テストトレーサビリティ](docs/test-traceability.md)

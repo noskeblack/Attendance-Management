@@ -1,6 +1,5 @@
 # テストケース一覧 ↔ PHPUnit トレーサビリティ
 
-要件シート **「テストケース一覧」** の行（Excel上の行番号）と、対応する **Feature テスト** の目安です。  
 「1行＝1メソッド」ではなく、**近い責務のテストに集約**している行もあります。
 
 ---
@@ -68,7 +67,7 @@
 
 | Excel行 | PHPUnit | 備考 |
 |--------|---------|------|
-| 22 | `AttendanceStampExtendedTest::test_clock_in_changes_status_to_working_and_shows_clock_in_button_only_once` | シートの「勤務中」⇔実装「出勤中」は [glossary.md](glossary.md) |
+| 22 | `AttendanceStampExtendedTest::test_clock_in_changes_status_to_working_and_shows_clock_in_button_only_once` | シートの「勤務中」⇔実装の「出勤中」は同一状態（`AttendanceStatus::Working`、画面は「出勤中」表記） |
 | 23 | 同上 + `AttendanceStampTest::test_user_cannot_clock_in_twice_in_a_day` | |
 | 24 | `AttendanceStampExtendedTest::test_clock_out_changes_status_to_completed_and_list_shows_clock_out` 等 + 一覧表示 | |
 
@@ -161,7 +160,7 @@
 |--------|---------|------|
 | 71 | `EmailVerificationFlowTest::test_register_sends_verification_notification` | |
 | 72 | `EmailVerificationFlowTest::test_verify_email_notice_contains_signed_verification_link_button` | |
-| 73 | `EmailVerificationFlowTest::test_visiting_signed_verification_url_verifies_and_redirects_to_attendance` | 遷移先名称は [glossary.md](glossary.md) |
+| 73 | `EmailVerificationFlowTest::test_visiting_signed_verification_url_verifies_and_redirects_to_attendance` | 遷移先は `/attendance`（画面タイトル「勤怠打刻」。教材の「勤怠登録」と同一画面の場合あり） |
 
 ---
 

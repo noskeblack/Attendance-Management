@@ -9,8 +9,8 @@ Thumbs.db
 
 # Laravel（src/ がアプリルート）
 src/.env
-src/.env.backup
-src/.env.production
+src/.env.*
+!src/.env.example
 src/.phpactor.json
 src/.phpunit.result.cache
 src/.fleet

@@ -17,28 +17,21 @@ Laravel 12 + Laravel Fortify を用いた勤怠管理アプリケーションで
 docker compose up -d --build
 ```
 
-`src/.env` を用意し、コンテナ内の MySQL に接続する設定にします（例）。
+`src/.env` は **`src/.env.example` をコピー**して用意します。`DB_HOST` など環境変数の名前と例は `src/.env.example` にだけ書いてあり、README には同じブロックを載せていません。二か所に同じ内容を書くと、片方だけ古いまま残りやすいためです。
 
-```env
-APP_URL=http://localhost
-
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=laravel_db
-DB_USERNAME=laravel_user
-DB_PASSWORD=laravel_pass
-
-# メール確認（MailHog）
-MAIL_MAILER=smtp
-MAIL_HOST=mailhog
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS="hello@example.com"
-MAIL_FROM_NAME="${APP_NAME}"
+```bash
+cp src/.env.example src/.env
 ```
+
+Docker Compose で起動するときは、**アプリがコンテナ内の MySQL と MailHog に接続するよう** `src/.env` を直します。
+
+1. **データベース（DB）**  
+   コピー直後は PC 内のファイルだけ使う **SQLite** 向けの行が有効です。Docker では別コンテナの **MySQL** を使うので、SQLite 側の `DB_CONNECTION` と `DB_DATABASE` の行の先頭に `#` を付けて無効にし、`src/.env.example` 内の「Docker compose 利用時」と書かれた MySQL 用の行から `#` を外して有効にします。
+
+2. **メール（MailHog）**  
+   開発中にブラウザで受信テストするため、メールは Docker の **MailHog** に送ります。`src/.env.example` の「Docker + MailHog」と書かれた `MAIL_*` のブロックを有効にし、上にある `MAIL_MAILER=log` などローカル向けの `MAIL_*` 行は `#` でコメントアウトします。
+
+`APP_URL` は、ブラウザのアドレスバーに合わせます（例: `http://localhost`）。
 
 コンテナ `php` 内でマイグレーションとシード:
 
@@ -74,6 +67,7 @@ docker run --rm -v "$PWD/src:/app" -w /app node:20 bash -lc "npm install && npm 
 cd src
 composer install
 cp .env.example .env
+touch database/database.sqlite
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
@@ -89,7 +83,6 @@ cd src
 php artisan test
 ```
 
-- **用語の整理**（例: 「勤務中」と「出勤中」）: [docs/glossary.md](docs/glossary.md)
 - **要件シート「テストケース一覧」↔ PHPUnit の対応表**: [docs/test-traceability.md](docs/test-traceability.md)
 
 ## 主な画面パス
@@ -112,6 +105,4 @@ php artisan test
 
 - [基本設計（ルート一覧）](docs/basic-design.md)
 - [テーブル仕様・ER](docs/table-spec.md)
-- [用語・表記（glossary）](docs/glossary.md)
 - [テストトレーサビリティ](docs/test-traceability.md)
-- [Figma・素材（DG01）と実装の関係](docs/figma-alignment.md)

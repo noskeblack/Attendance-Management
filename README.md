@@ -115,7 +115,4 @@ php artisan test
 - [テーブル仕様・ER](docs/table-spec.md)
 - [テストトレーサビリティ](docs/test-traceability.md)
 - [画面設計チェックリスト](docs/screen-design-checklist.md)
-- [UIレビュー指摘メモ](docs/ui-review-notes.md)
-- [Figma差分調整メモ](docs/figma-alignment.md)
-- [提出前最終チェック](docs/submission-final-checklist.md)
 - [Blade/CSSリファクタリングテンプレート](docs/blade-css-refactor-template.md)

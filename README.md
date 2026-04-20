@@ -28,7 +28,7 @@ cp src/.env.example src/.env
 Docker Compose で起動するときは、**アプリがコンテナ内の MySQL と MailHog に接続するよう** `src/.env` を直します。
 
 1. **データベース（DB）**  
-   コピー直後は PC 内のファイルだけ使う **SQLite** 向けの行が有効です。Docker では別コンテナの **MySQL** を使うので、SQLite 側の `DB_CONNECTION` と `DB_DATABASE` の行の先頭に `#` を付けて無効にし、`src/.env.example` 内の「Docker compose 利用時」と書かれた MySQL 用の行から `#` を外して有効にします。
+   `src/.env.example` は **MySQL（Docker の `mysql` サービス）**向けがデフォルトです。`src/.env` をコピーしたあと、必要に応じて `DB_*` を調整してください。
 
 2. **メール（MailHog）**  
    開発中にブラウザで受信テストするため、メールは Docker の **MailHog** に送ります。`src/.env.example` の「Docker + MailHog」と書かれた `MAIL_*` のブロックを有効にし、上にある `MAIL_MAILER=log` などローカル向けの `MAIL_*` 行は `#` でコメントアウトします。
@@ -69,7 +69,11 @@ docker run --rm -v "$PWD/src:/app" -w /app node:20 bash -lc "npm install && npm 
 cd src
 composer install
 cp .env.example .env
-touch database/database.sqlite
+```
+
+`.env` の `DB_HOST` を **`127.0.0.1`** に変更してください（Docker コンテナ内で動かす場合は `mysql` のままで問題ありません）。
+
+```bash
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
@@ -77,6 +81,8 @@ npm install
 npm run build
 php artisan serve
 ```
+
+MySQL は **`docker-compose.yml` の `mysql` を `3306` で公開**しているので、Docker を起動した状態でホストから接続できます。
 
 ## テスト
 

@@ -5,7 +5,7 @@
 @section('content')
     <div class="ct-card">
         <h1 class="ct-title">パスワード再設定</h1>
-        <form method="POST" action="{{ url('/forgot-password') }}" class="ct-form">
+        <form method="POST" action="{{ url('/forgot-password') }}" class="ct-form" novalidate>
             @csrf
             <div class="ct-field">
                 <label class="ct-label" for="email">メールアドレス</label>

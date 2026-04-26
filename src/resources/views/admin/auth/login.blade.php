@@ -5,7 +5,7 @@
 @section('content')
     <div class="ct-card">
         <h1 class="ct-title">管理者ログイン</h1>
-        <form method="POST" action="{{ route('admin.login.store') }}" class="ct-form">
+        <form method="POST" action="{{ route('admin.login.store') }}" class="ct-form" novalidate>
             @csrf
             <div class="ct-field">
                 <label class="ct-label" for="email">メールアドレス</label>

@@ -5,7 +5,7 @@
 @section('content')
     <div class="ct-card">
         <h1 class="ct-title">パスワード再設定</h1>
-        <form method="POST" action="{{ url('/reset-password') }}" class="ct-form">
+        <form method="POST" action="{{ url('/reset-password') }}" class="ct-form" novalidate>
             @csrf
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
             <div class="ct-field">

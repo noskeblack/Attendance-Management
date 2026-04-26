@@ -5,7 +5,7 @@
 @section('content')
     <div class="ct-card">
         <h1 class="ct-title">会員登録</h1>
-        <form method="POST" action="{{ route('register') }}" class="ct-form">
+        <form method="POST" action="{{ route('register') }}" class="ct-form" novalidate>
             @csrf
             <div class="ct-field">
                 <label class="ct-label" for="name">お名前</label>
